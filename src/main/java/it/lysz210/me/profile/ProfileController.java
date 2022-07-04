@@ -1,9 +1,6 @@
 package it.lysz210.me.profile;
 
 import it.lysz210.me.profile.dto.ProfileDto;
-import it.lysz210.me.profile.model.Profile;
-import it.lysz210.me.profile.model.Translation;
-import it.lysz210.me.profile.model.TranslationId;
 import it.lysz210.me.profile.repositories.LocalesRepository;
 import it.lysz210.me.profile.repositories.ProfilesRepository;
 import it.lysz210.me.profile.repositories.TranslationGroupsRepository;
@@ -33,8 +30,7 @@ public class ProfileController {
                             profile.getId(),
                             profile.getFirstName(),
                             profile.getLastName(),
-                            translationsRepo.findById(
-                            ).map(Translation::getValue).orElseThrow()
+                            translationService.translate(profile)
                     ))
                     .orElse(null);
     }
