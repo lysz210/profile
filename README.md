@@ -1,2 +1,2 @@
 # profile
-Microservices holding data about personal profile
+Microservices holding data about personal profile.
