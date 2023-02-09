@@ -1,10 +1,24 @@
 server:
   port: 8080
+spring:
+  application:
+    name: profile
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,env,beans,conditions
+        include: health,info,env,beans,conditions,prometheus
+  tracing:
+    sampling:
+      # All traces should be sent to latency analysis tool
+      probability: 1.0
+  metrics:
+    distribution:
+      percentiles-histogram:
+        http:
+          server:
+            # For Exemplars to work we need histogram buckets
+            requests: true
 springdoc:
   show-actuator: true
