@@ -20,5 +20,6 @@ management:
           server:
             # For Exemplars to work we need histogram buckets
             requests: true
+
 springdoc:
   show-actuator: true

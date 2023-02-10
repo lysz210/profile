@@ -17,9 +17,9 @@ public class SocialAccountService {
     }
 
     @Observed(
-            name = "social-accounts.list",
+            name = "service.social-accounts.list",
             contextualName = "list-all-social-accounts",
-            lowCardinalityKeyValues = {"social-accounts", "social-accounts-2"}
+            lowCardinalityKeyValues = {"list", "social-accounts"}
     )
     public Flux<SocialAccount> list() {
         log.info("List all social accounts");
