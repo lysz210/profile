@@ -23,3 +23,12 @@ management:
 
 springdoc:
   show-actuator: true
+
+# aws configs
+
+amazon:
+  aws:
+    secretKey: key2
+    accessKey: key
+  dynamodb:
+      endpoint: http://localhost:8000/
