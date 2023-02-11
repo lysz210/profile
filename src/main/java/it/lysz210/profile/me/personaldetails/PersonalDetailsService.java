@@ -18,6 +18,6 @@ public class PersonalDetailsService {
             lowCardinalityKeyValues = {"find", "details"}
     )
     public Mono<PersonalDetails> findDetails(Locale locale) {
-        return this.personalDetailsRepository.find(locale);
+        return this.personalDetailsRepository.findAll().next();
     }
 }

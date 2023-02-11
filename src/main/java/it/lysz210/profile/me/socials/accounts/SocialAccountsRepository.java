@@ -5,7 +5,7 @@ import reactor.core.publisher.Flux;
 public interface SocialAccountsRepository {
     /**
      * retrieve all social accounts
-     * @return
+     * @return all social accounts
      */
     Flux<SocialAccount> findAll();
 }
