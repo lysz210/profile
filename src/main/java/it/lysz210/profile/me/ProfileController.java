@@ -2,6 +2,7 @@ package it.lysz210.profile.me;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
@@ -10,6 +11,7 @@ import java.util.Locale;
 
 @RequiredArgsConstructor
 @RestController
+@RequestMapping("/me")
 public class ProfileController {
 
     private final ProfileService profileService;
@@ -20,7 +22,7 @@ public class ProfileController {
      *
      * @return profile
      */
-    @GetMapping("/me")
+    @GetMapping("")
     public Mono<Profile> getProfile(@RequestParam(defaultValue = "EN") Locale locale) {
         return profileService.getProfile(locale);
     }

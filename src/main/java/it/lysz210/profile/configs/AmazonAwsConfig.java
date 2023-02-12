@@ -6,6 +6,8 @@ import it.lysz210.profile.me.personaldetails.DynamoPersonalDetailsRepository;
 import it.lysz210.profile.me.personaldetails.PersonalDetails;
 import it.lysz210.profile.me.socials.accounts.DynamoSocialAccountsRepository;
 import it.lysz210.profile.me.socials.accounts.SocialAccount;
+import it.lysz210.profile.me.workexperiences.DynamoWorkExperiencesRepository;
+import it.lysz210.profile.me.workexperiences.WorkExperience;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,6 +36,10 @@ public class AmazonAwsConfig {
 
     @Value("classpath:me/social-accounts.json")
     private Path socialAccountsFile;
+
+    @Value("classpath:me/en-work-experiences.json")
+    private Path enWorkExperiences;
+
     private final ObjectMapper objectMapper;
 
     @Data
@@ -82,20 +88,27 @@ public class AmazonAwsConfig {
     public void initTables(ContextRefreshedEvent event) throws IOException {
         final var context = event.getApplicationContext();
         final var detailsRepository = context.getBean(DynamoPersonalDetailsRepository.class);
+        final var socialAccountRepository = context.getBean(DynamoSocialAccountsRepository.class);
+        final var workExperiencesRepository = context.getBean(DynamoWorkExperiencesRepository.class);
         final var details = new PersonalDetails();
         details.setName("Lingyong");
         details.setSurname("Sun");
 
-        final var socialAccountRepository = context.getBean(DynamoSocialAccountsRepository.class);
         final var socials = objectMapper.readValue(
                 this.socialAccountsFile.toFile(),
                 new TypeReference<Collection<SocialAccount>>() {}
         );
+        final var workExperiencesEn = objectMapper.readValue(
+                this.enWorkExperiences.toFile(),
+                new TypeReference<Collection<WorkExperience>>() {}
+        );
         socialAccountRepository.createTable();
         detailsRepository.createTable();
+        workExperiencesRepository.createTable();
         Flux.concat(
                 detailsRepository.save(details),
-                socialAccountRepository.saveAll(socials).collectList()
+                socialAccountRepository.saveAll(socials).collectList(),
+                workExperiencesRepository.saveAll(workExperiencesEn).collectList()
         ).blockLast();
     }
 }

@@ -2,24 +2,24 @@ package it.lysz210.profile.me.socials.accounts;
 
 import io.micrometer.observation.annotation.Observed;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;
 
+import java.util.Locale;
+
+@Slf4j
 @RequiredArgsConstructor
 @Service
 public class SocialAccountService {
 
-    Logger log = LoggerFactory.getLogger(SocialAccountService.class);
     private final SocialAccountsRepository socialAccountsRepository;
 
     @Observed(
             name = "service.social-accounts.list",
-            contextualName = "list-all-social-accounts",
-            lowCardinalityKeyValues = {"list", "social-accounts"}
+            contextualName = "list-all-social-accounts"
     )
-    public Flux<SocialAccount> list() {
+    public Flux<SocialAccount> list(Locale locale) {
         log.info("List all social accounts");
         return socialAccountsRepository.findAll();
     }
