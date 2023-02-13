@@ -29,6 +29,7 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.Locale;
 
 @RequiredArgsConstructor
 @Configuration
@@ -39,6 +40,8 @@ public class AmazonAwsConfig {
 
     @Value("classpath:me/en-work-experiences.json")
     private Path enWorkExperiences;
+    @Value("classpath:me/it-work-experiences.json")
+    private Path itWorkExperiences;
 
     private final ObjectMapper objectMapper;
 
@@ -102,13 +105,20 @@ public class AmazonAwsConfig {
                 this.enWorkExperiences.toFile(),
                 new TypeReference<Collection<WorkExperience>>() {}
         );
+        workExperiencesEn.forEach(locale -> locale.setLocale(Locale.ENGLISH));
+        final var workExperiencesIt = objectMapper.readValue(
+                this.itWorkExperiences.toFile(),
+                new TypeReference<Collection<WorkExperience>>() {}
+        );
+        workExperiencesIt.forEach(locale -> locale.setLocale(Locale.ITALIAN));
         socialAccountRepository.createTable();
         detailsRepository.createTable();
         workExperiencesRepository.createTable();
         Flux.concat(
                 detailsRepository.save(details),
                 socialAccountRepository.saveAll(socials).collectList(),
-                workExperiencesRepository.saveAll(workExperiencesEn).collectList()
+                workExperiencesRepository.saveAll(workExperiencesEn).collectList(),
+                workExperiencesRepository.saveAll(workExperiencesIt).collectList()
         ).blockLast();
     }
 }

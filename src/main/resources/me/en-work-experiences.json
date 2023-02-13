@@ -7,7 +7,7 @@
     "jobs": [
       "Backend developer for Unipol Rental"
     ],
-    "settore": "Information Tecnology"
+    "sector": "Information Tecnology"
   },
   {
     "name": "ti",
@@ -21,7 +21,7 @@
       "Main tools: Spring, Springboot, Docker, Pact",
       "Versioning with GitLab"
     ],
-    "settore": "Information Technology"
+    "sector": "Information Technology"
   },
   {
     "name": "tech",
@@ -35,7 +35,7 @@
       "Distributed NoSQL Database with CouchDB and PouchDB as client for automated task processing",
       "Automation of repeatable tasks with scripting"
     ],
-    "settore": "Information Technology"
+    "sector": "Information Technology"
   },
   {
     "name": "flunch",
@@ -43,7 +43,7 @@
     "end": "2013",
     "role": "Pizza maker",
     "company": "<a href=\"http://www.flunch.it/\" alt=\"link to ufficiale flunch italia homepage\" target=\"blank\">Flunch Italia s.r.l.</a>, via Don Tosatto 1, Mestre(Venezia)",
-    "settore": "Self-service restaurant"
+    "sector": "Self-service restaurant"
   },
   {
     "name": "mc",
@@ -51,7 +51,7 @@
     "end": "2004",
     "role": "Adetto generico",
     "company": "<a href=\"http://www.caribesrl.com/index.html\" alt=\"link to Caribe srl homepage\" target=\"blank\">Caribe s.r.l.</a>, McDonald's in franchising, calle Larga San Marco Venezia",
-    "settore": "Ristorazione fast-food"
+    "sector": "Ristorazione fast-food"
   },
   {
     "name": "famiglia",
@@ -59,6 +59,6 @@
     "end": "2002",
     "role": "I work in a family business",
     "company": "Friendshop of the world (family business)",
-    "settore": "Processing and sale of bags"
+    "sector": "Processing and sale of bags"
   }
 ]

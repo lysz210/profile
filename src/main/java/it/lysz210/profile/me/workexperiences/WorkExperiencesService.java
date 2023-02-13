@@ -17,6 +17,6 @@ public class WorkExperiencesService {
             contextualName = "list-all-work-experiences"
     )
     public Flux<WorkExperience> list(Locale locale) {
-        return workExperiencesRepository.findAll();
+        return workExperiencesRepository.findAll(locale);
     }
 }

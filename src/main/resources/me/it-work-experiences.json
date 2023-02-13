@@ -1,0 +1,65 @@
+[
+  {
+    "name": "interlogia",
+    "start": "2021-12",
+    "role": "Sviluppatore Backend Java",
+    "company": "<a href=\"https:\/\/www.interlogica.it\/about\/\" alt=\"link al sito Interlogica\" target=\"blank\">Interlogica Srl<\/a>, Via Miranese, 91, 30174 Venezia VE",
+    "jobs": [
+      "Sviluppo backend Unipol Rental"
+    ],
+    "sector": "Informatica"
+  },
+  {
+    "name": "ti",
+    "start": "2019-01",
+    "end": "2021-11",
+    "role": "Consulente informatico cliente principale <a href=\"https:\/\/www.reply.com\/it\/\" alt=\"link al sito Reply\" target=\"blank\">Reply<\/a> di Silea",
+    "company": "<a href=\"https:\/\/www.telematicainformatica.it\/\" alt=\"link al sito Telematica Informatica Srl\" target=\"blank\">Telematica Informatica Srl<\/a>,\n            Corso Rosselli 240, Torino 10141",
+    "jobs": [
+      "Microservizi per Generali assicurazioni no auto e Genertel",
+      "JEE\/Microservices Java",
+      "Tecnologie principali: Spring, Springboot, Docker, Pact",
+      "Versioning con GitLab"
+    ],
+    "sector": "Informatica"
+  },
+  {
+    "name": "tech",
+    "start": "2016-08",
+    "end": "2018-12",
+    "role": "Web developer",
+    "company": "<a href=\"http:\/\/www.studioitaliatech.com\/\" alt=\"link al sito Studio Italia Tech Srl\" target=\"blank\">Studio Italia Tech s.r.l.<\/a>,\n            Via Pialoi 30 - 30020 Marcon - Venezia (Italia)",
+    "jobs": [
+      "Full-stack con php",
+      "Applicazioni Electron distribuiti localmente con CouchDB",
+      "Sviluppo applicazioni con Electron",
+      "Database NoSQL con CouchDB e replice in PouchDB per la gestione automatica di task",
+      "Automazione di alcuni processi ripetitivi emulabili attraverso script con linguaggi di programmazione"
+    ],
+    "sector": "Informatica"
+  },
+  {
+    "name": "flunch",
+    "start": "2004",
+    "end": "2013-06",
+    "role": "Pizzaiolo",
+    "company": "<a href=\"http:\/\/www.flunch.it\/\" alt=\"link al sito ufficiale flunch italia\" target=\"blank\">Flunch Italia s.r.l.<\/a>, via Don Tosatto 1, Mestre(Venezia)",
+    "sector": "Ristorazione self-service"
+  },
+  {
+    "name": "mc",
+    "start": "2002",
+    "end": "2004",
+    "role": "Adetto generico",
+    "company": "<a href=\"http:\/\/www.caribesrl.com\/index.html\" alt=\"link al sito ufficiale dell'company Caribe srl\" target=\"blank\">Caribe s.r.l.<\/a>, McDonald's in franchising, calle Larga San Marco Venezia",
+    "sector": "Ristorazione fast-food"
+  },
+  {
+    "name": "famiglia",
+    "start": "1996",
+    "end": "2002",
+    "role": "Lavoro in company familiare",
+    "company": "Friendshop of the world (company familiare)",
+    "sector": "Vendita al dettaglio di prodotti non alimentari, lavorazione artigianale di pellame e abbigliamento."
+  }
+]
