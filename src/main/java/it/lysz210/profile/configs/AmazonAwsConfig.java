@@ -2,6 +2,8 @@ package it.lysz210.profile.configs;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.micrometer.observation.annotation.Observed;
+import it.lysz210.profile.lib.dynamodb.repository.CreateTable;
 import it.lysz210.profile.me.personaldetails.DynamoPersonalDetailsRepository;
 import it.lysz210.profile.me.personaldetails.PersonalDetails;
 import it.lysz210.profile.me.socials.accounts.DynamoSocialAccountsRepository;
@@ -12,6 +14,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
@@ -30,6 +33,7 @@ import java.net.URL;
 import java.nio.file.Path;
 import java.util.Collection;
 import java.util.Locale;
+import java.util.Map;
 
 @RequiredArgsConstructor
 @Configuration
@@ -87,9 +91,26 @@ public class AmazonAwsConfig {
                 .build();
     }
 
+    @Observed(
+            name = "configs.AmazonAwsConfig.initTables",
+            contextualName = "dynamodb-init-tables"
+    )
     @EventListener
-    public void initTables(ContextRefreshedEvent event) throws IOException {
+    public void initTables(ContextRefreshedEvent event) {
         final var context = event.getApplicationContext();
+        Flux.just(CreateTable.class)
+                .map(context::getBeansOfType)
+                .flatMapIterable(Map::values)
+                .flatMap(CreateTable::createTable)
+                .doOnComplete(() -> this.seedTables(context))
+                .blockLast();
+    }
+
+    @Observed(
+            name = "configs.AmazonAwsConfig.seedTables",
+            contextualName = "configs-amazon-aws-config"
+    )
+    public void seedTables(ApplicationContext context) {
         final var detailsRepository = context.getBean(DynamoPersonalDetailsRepository.class);
         final var socialAccountRepository = context.getBean(DynamoSocialAccountsRepository.class);
         final var workExperiencesRepository = context.getBean(DynamoWorkExperiencesRepository.class);
@@ -97,28 +118,32 @@ public class AmazonAwsConfig {
         details.setName("Lingyong");
         details.setSurname("Sun");
 
-        final var socials = objectMapper.readValue(
-                this.socialAccountsFile.toFile(),
-                new TypeReference<Collection<SocialAccount>>() {}
-        );
-        final var workExperiencesEn = objectMapper.readValue(
-                this.enWorkExperiences.toFile(),
-                new TypeReference<Collection<WorkExperience>>() {}
-        );
-        workExperiencesEn.forEach(locale -> locale.setLocale(Locale.ENGLISH));
-        final var workExperiencesIt = objectMapper.readValue(
-                this.itWorkExperiences.toFile(),
-                new TypeReference<Collection<WorkExperience>>() {}
-        );
-        workExperiencesIt.forEach(locale -> locale.setLocale(Locale.ITALIAN));
-        socialAccountRepository.createTable();
-        detailsRepository.createTable();
-        workExperiencesRepository.createTable();
-        Flux.concat(
-                detailsRepository.save(details),
-                socialAccountRepository.saveAll(socials).collectList(),
-                workExperiencesRepository.saveAll(workExperiencesEn).collectList(),
-                workExperiencesRepository.saveAll(workExperiencesIt).collectList()
-        ).blockLast();
+        try {
+            final var socials = objectMapper.readValue(
+                    this.socialAccountsFile.toFile(),
+                    new TypeReference<Collection<SocialAccount>>() {}
+            );
+            final var workExperiencesEn = objectMapper.readValue(
+                    this.enWorkExperiences.toFile(),
+                    new TypeReference<Collection<WorkExperience>>() {}
+            );
+            workExperiencesEn.forEach(locale -> locale.setLocale(Locale.ENGLISH));
+            final var workExperiencesIt = objectMapper.readValue(
+                    this.itWorkExperiences.toFile(),
+                    new TypeReference<Collection<WorkExperience>>() {}
+            );
+            workExperiencesIt.forEach(locale -> locale.setLocale(Locale.ITALIAN));
+            socialAccountRepository.createTable();
+            detailsRepository.createTable();
+            workExperiencesRepository.createTable();
+            Flux.concat(
+                    detailsRepository.save(details),
+                    socialAccountRepository.saveAll(socials).collectList(),
+                    workExperiencesRepository.saveAll(workExperiencesEn).collectList(),
+                    workExperiencesRepository.saveAll(workExperiencesIt).collectList()
+            ).blockLast();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
