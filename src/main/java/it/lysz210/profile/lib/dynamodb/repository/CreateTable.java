@@ -15,7 +15,6 @@ public interface CreateTable<T> extends WithTable<T>, WithLogger {
         final var log = this.getLog();
         return Mono.fromFuture(table.createTable())
                 .doOnNext(unused -> log.info("Table {} created", table.tableName()))
-                .doOnError(ex -> log.info("Table {} already exists", table.tableName(), ex))
-                .onErrorComplete();
+                .doOnError(ex -> log.info("Table {} already exists", table.tableName(), ex));
     }
 }

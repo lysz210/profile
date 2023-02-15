@@ -1,5 +1,6 @@
 package it.lysz210.profile.me.workexperiences;
 
+import it.lysz210.profile.lib.common.I18nazed;
 import lombok.Data;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbBean;
 import software.amazon.awssdk.enhanced.dynamodb.mapper.annotations.DynamoDbPartitionKey;
@@ -10,7 +11,7 @@ import java.util.Locale;
 
 @Data
 @DynamoDbBean
-public class WorkExperience {
+public class WorkExperience implements I18nazed {
     private Locale locale;
     private String name;
 

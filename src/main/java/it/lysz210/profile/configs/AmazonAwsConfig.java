@@ -1,25 +1,23 @@
 package it.lysz210.profile.configs;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.micrometer.observation.annotation.Observed;
-import it.lysz210.profile.lib.dynamodb.repository.CreateTable;
-import it.lysz210.profile.me.personaldetails.DynamoPersonalDetailsRepository;
+import it.lysz210.profile.lib.common.I18nazed;
+import it.lysz210.profile.lib.dynamodb.repository.AbsDynamoRepository;
 import it.lysz210.profile.me.personaldetails.PersonalDetails;
-import it.lysz210.profile.me.socials.accounts.DynamoSocialAccountsRepository;
 import it.lysz210.profile.me.socials.accounts.SocialAccount;
-import it.lysz210.profile.me.workexperiences.DynamoWorkExperiencesRepository;
 import it.lysz210.profile.me.workexperiences.WorkExperience;
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import org.reactivestreams.Publisher;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.context.event.EventListener;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
 import software.amazon.awssdk.auth.credentials.AwsCredentialsProvider;
 import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
@@ -31,9 +29,10 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
-import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 
 @RequiredArgsConstructor
 @Configuration
@@ -98,52 +97,73 @@ public class AmazonAwsConfig {
     @EventListener
     public void initTables(ContextRefreshedEvent event) {
         final var context = event.getApplicationContext();
-        Flux.just(CreateTable.class)
+        Flux.just(AbsDynamoRepository.class)
                 .map(context::getBeansOfType)
                 .flatMapIterable(Map::values)
-                .flatMap(CreateTable::createTable)
-                .doOnComplete(() -> this.seedTables(context))
+                .flatMap(repository -> {
+                    return repository.createTable()
+                            .thenReturn(repository)
+                            .onErrorReturn(repository)
+                            .flux()
+                            .flatMap(unused -> this.seedTable(repository));
+                })
                 .blockLast();
+    }
+
+    public <T> Flux<T> provideIterableData(final Class<T> entityType) {
+        return Flux.just(entityType)
+                .flatMap(t -> {
+                    if (SocialAccount.class == entityType) {
+                        return Mono.just(this.socialAccountsFile.toFile());
+                    } else if (WorkExperience.class == entityType) {
+                        return Flux.just(
+                                this.enWorkExperiences.toFile(),
+                                this.itWorkExperiences.toFile()
+                        );
+                    } else {
+                        return Flux.empty();
+                    }
+                }).flatMap(file -> {
+                    Flux<T> data;
+                    try {
+                        data = Flux.fromIterable(objectMapper.readValue(
+                                this.socialAccountsFile.toFile(),
+                                objectMapper.getTypeFactory()
+                                        .constructCollectionType(List.class, entityType)
+                        ));
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    final var locale = Locale.of(file.getName().substring(0, 2));
+                    if (Set.of(entityType.getInterfaces()).contains(I18nazed.class)) {
+                        data = data.map(entity -> {
+                            ((I18nazed) entity).setLocale(locale);
+                            return entity;
+                        });
+                    }
+
+                    return data;
+                });
+
+    }
+
+    public <T> Publisher<T> provideData(Class<T> entityType) {
+        if (PersonalDetails.class == entityType) {
+            final var details = new PersonalDetails();
+            details.setName("Lingyong");
+            details.setSurname("Sun");
+            return Mono.just(entityType.cast(details));
+        } else {
+            return provideIterableData(entityType);
+        }
     }
 
     @Observed(
             name = "configs.AmazonAwsConfig.seedTables",
             contextualName = "configs-amazon-aws-config"
     )
-    public void seedTables(ApplicationContext context) {
-        final var detailsRepository = context.getBean(DynamoPersonalDetailsRepository.class);
-        final var socialAccountRepository = context.getBean(DynamoSocialAccountsRepository.class);
-        final var workExperiencesRepository = context.getBean(DynamoWorkExperiencesRepository.class);
-        final var details = new PersonalDetails();
-        details.setName("Lingyong");
-        details.setSurname("Sun");
-
-        try {
-            final var socials = objectMapper.readValue(
-                    this.socialAccountsFile.toFile(),
-                    new TypeReference<Collection<SocialAccount>>() {}
-            );
-            final var workExperiencesEn = objectMapper.readValue(
-                    this.enWorkExperiences.toFile(),
-                    new TypeReference<Collection<WorkExperience>>() {}
-            );
-            workExperiencesEn.forEach(locale -> locale.setLocale(Locale.ENGLISH));
-            final var workExperiencesIt = objectMapper.readValue(
-                    this.itWorkExperiences.toFile(),
-                    new TypeReference<Collection<WorkExperience>>() {}
-            );
-            workExperiencesIt.forEach(locale -> locale.setLocale(Locale.ITALIAN));
-            socialAccountRepository.createTable();
-            detailsRepository.createTable();
-            workExperiencesRepository.createTable();
-            Flux.concat(
-                    detailsRepository.save(details),
-                    socialAccountRepository.saveAll(socials).collectList(),
-                    workExperiencesRepository.saveAll(workExperiencesEn).collectList(),
-                    workExperiencesRepository.saveAll(workExperiencesIt).collectList()
-            ).blockLast();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    public <T> Flux<T> seedTable(AbsDynamoRepository<T> repository) {
+        return Flux.from(this.provideData(repository.getEntityType()))
+                .flatMap(entity -> repository.save(repository.getEntityType().cast(entity)));
     }
 }

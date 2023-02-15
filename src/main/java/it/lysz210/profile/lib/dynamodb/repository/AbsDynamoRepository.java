@@ -10,8 +10,11 @@ public abstract class AbsDynamoRepository<T>
 {
     @Getter
     private final DynamoDbAsyncTable<T> table;
+    @Getter
+    private final Class<T> entityType;
 
-    public AbsDynamoRepository(DynamoDbEnhancedAsyncClient dynamodb, Class<T> type) {
-        this.table = dynamodb.table(type.getCanonicalName(), TableSchema.fromBean(type));
+    public AbsDynamoRepository(DynamoDbEnhancedAsyncClient dynamodb, Class<T> entityType) {
+        this.entityType = entityType;
+        this.table = dynamodb.table(entityType.getCanonicalName(), TableSchema.fromBean(entityType));
     }
 }
