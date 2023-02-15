@@ -125,7 +125,7 @@ public class AmazonAwsConfig {
                     Flux<T> data;
                     try {
                         data = Flux.fromIterable(objectMapper.readValue(
-                                this.socialAccountsFile.toFile(),
+                                file,
                                 objectMapper.getTypeFactory()
                                         .constructCollectionType(List.class, entityType)
                         ));
