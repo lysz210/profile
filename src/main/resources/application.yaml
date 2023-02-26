@@ -28,6 +28,10 @@ management:
             # For Exemplars to work we need histogram buckets
             requests: true
 
+# traceID and spanId are predefined MDC keys - we want the logs to include them
+logging:
+  pattern:
+    level: "%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
 springdoc:
   show-actuator: true
 
