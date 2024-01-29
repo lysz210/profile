@@ -1,0 +1,7 @@
+name: profile
+runtime: java
+description: personal profile data
+config:
+  pulumi:tags:
+    value:
+      pulumi:template: java-gradle
