@@ -27,11 +27,11 @@ public class ArrayNodeSerializer extends StdSerializer<ArrayNode> {
         for (Iterator<JsonNode> it = arrayNode.elements(); it.hasNext(); ) {
             final var node = it.next();
             if (node.isNull() || !node.isValueNode()) {
-                break;
+                return Optional.empty();
             }
             final var dynamoType = ValueNodeSerializer.DynamoDbSimpleType.forValueNodeInstance((ValueNode) node);
             if (Objects.isNull(dynamoType) || (Objects.nonNull(candidate) && candidate != dynamoType )) {
-                break;
+                return Optional.empty();
             }
             candidate = dynamoType;
         }
