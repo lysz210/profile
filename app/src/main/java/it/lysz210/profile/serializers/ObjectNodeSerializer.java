@@ -11,9 +11,6 @@ import java.util.Iterator;
 import java.util.Map;
 
 public class ObjectNodeSerializer extends StdSerializer<ObjectNode> {
-    public ObjectNodeSerializer() {
-        this(null);
-    }
 
     public ObjectNodeSerializer(Class<ObjectNode> type) {
         super(type);
@@ -22,12 +19,16 @@ public class ObjectNodeSerializer extends StdSerializer<ObjectNode> {
     @Override
     public void serialize(ObjectNode jsonNodes, JsonGenerator jsonGenerator, SerializerProvider serializerProvider) throws IOException {
         jsonGenerator.writeStartObject();
+        jsonGenerator.writeFieldName("M");
+        jsonGenerator.writeStartObject();
 
         for (Iterator<Map.Entry<String, JsonNode>> it = jsonNodes.fields(); it.hasNext(); ) {
             var entry = it.next();
             serializerProvider.defaultSerializeField(entry.getKey(), entry.getValue(), jsonGenerator);
 
         }
+
+        jsonGenerator.writeEndObject();
 
         jsonGenerator.writeEndObject();
     }

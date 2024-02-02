@@ -1,9 +1,9 @@
 package it.lysz210.profile.repositories;
 
-import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import java.nio.file.Path;
 
 public interface I18nRepository {
-    JsonNode retrieveTranslation(Path source);
+    ObjectNode retrieveTranslation(Path source);
 }
