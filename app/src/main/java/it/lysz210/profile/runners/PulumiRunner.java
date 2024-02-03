@@ -19,9 +19,14 @@ public class PulumiRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws JsonProcessingException {
         final var groups = dynamoDbTranslationService.allTranslations();
-        System.out.println(dynamodbMapper.writerWithDefaultPrettyPrinter().writeValueAsString(groups));
-//        Pulumi.run(ctx ->
-//                ctx.export("exampleOutput", Output.of(information.toString()))
-//        );
+        Pulumi.run(ctx ->
+                {
+                    try {
+                        ctx.export("exampleOutput", Output.of(dynamodbMapper.writeValueAsString(groups)));
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+        );
     }
 }
