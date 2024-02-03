@@ -8,6 +8,7 @@ import com.pulumi.aws.dynamodb.TableItem;
 import com.pulumi.aws.dynamodb.TableItemArgs;
 import com.pulumi.aws.dynamodb.inputs.TableAttributeArgs;
 import com.pulumi.aws.dynamodb.inputs.TableGlobalSecondaryIndexArgs;
+import com.pulumi.core.Output;
 import it.lysz210.profile.services.DynamoDbTranslationService;
 import it.lysz210.profile.services.I18nService;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +17,7 @@ import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Service;
 
-import java.util.Collection;
+import java.util.stream.Stream;
 
 @RequiredArgsConstructor
 @Service
@@ -28,6 +29,7 @@ public class PulumiRunner implements ApplicationRunner {
 
     Table createTable() {
         return new Table("i18n", TableArgs.builder()
+                .name("i18n.cv.lysz210")
                 .attributes(
                     TableAttributeArgs.builder()
                             .name(PARTITION_KEY)
@@ -70,7 +72,7 @@ public class PulumiRunner implements ApplicationRunner {
         return dynamodbMapper.writeValueAsString(i18nGroup);
     }
 
-    Collection<TableItem> createItems(Table table) {
+    Stream<TableItem> createItems(Table table) {
         final var groups = dynamoDbTranslationService.allTranslations();
         return groups.stream()
                 .map(content -> new TableItem(
@@ -81,16 +83,17 @@ public class PulumiRunner implements ApplicationRunner {
                                 .rangeKey(table.rangeKey().applyValue(value -> value.orElse(null)))
                                 .item(this.dynamify(content))
                                 .build()
-                )).toList();
+                ));
     }
 
     @Override
     public void run(ApplicationArguments args){
         Pulumi.run(ctx -> {
                 final var table = createTable();
-                createItems(table);
+                final var items = createItems(table).map(TableItem::getId).toList();
                 ctx.export("tableName", table.name())
-                        .export("tableArn", table.arn());
+                        .export("tableArn", table.arn())
+                        .export("items", Output.all(items).applyValue(list -> String.join(" - ", list)));
             }
         );
     }
