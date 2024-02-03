@@ -4,17 +4,16 @@ import it.lysz210.profile.repositories.I18nRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.io.UncheckedIOException;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Collection;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @RequiredArgsConstructor
@@ -45,25 +44,10 @@ public class DynamoDbTranslationService implements I18nService {
                         }
                     });
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    throw new UncheckedIOException(e);
                 }
                 return builder.build();
             }).toList();
         }
-    }
-
-    @SneakyThrows
-    public static void main(String[] args) {
-        final var root = new ClassPathResource("i18n").getFile().toPath();
-
-
-        final var path = Files.walkFileTree(root, new SimpleFileVisitor<>() {
-            @Override
-            public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
-                System.out.println(root.relativize(file));
-                return super.visitFile(file, attrs);
-            }
-        });
-        System.out.println(path.getFileName());
     }
 }
