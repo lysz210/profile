@@ -27,6 +27,14 @@ public class I18nGroupSerializer extends StdSerializer<I18nService.I18nGroup> {
         serializerProvider.defaultSerializeField("locale", TextNode.valueOf(key.locale()), jsonGenerator);
         serializerProvider.defaultSerializeField("fullpath", TextNode.valueOf(key.fullpath()), jsonGenerator);
 
+        final var meta = i18nGroup.meta();
+
+        serializerProvider.defaultSerializeField("mtime", TextNode.valueOf(meta.lastModifiedTime().toString()), jsonGenerator);
+        final var createdAt = meta.creationTime();
+        if (Objects.nonNull(createdAt)) {
+            serializerProvider.defaultSerializeField("birthtime", TextNode.valueOf(createdAt.toString()), jsonGenerator);
+        }
+
         final var root = i18nGroup.rootAttributes();
         if (Objects.nonNull(root)) {
             for (Iterator<Map.Entry<String, JsonNode>> it = root.fields(); it.hasNext(); ) {
