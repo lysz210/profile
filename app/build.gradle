@@ -23,8 +23,8 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
-    implementation 'com.pulumi:pulumi:(,1.0]'
-    implementation 'com.pulumi:aws:v5.10.0'
+    implementation 'com.pulumi:pulumi:0.9.5'
+    implementation 'com.pulumi:aws:6.0.0-alpha.4+7fceb184'
 
 
     implementation platform('com.fasterxml.jackson:jackson-bom:2.14.2')
