@@ -1,0 +1,10 @@
+from: "201608"
+periodo: "Dal Agosto 2016 al Dicembre 2018"
+ruolo: Web developer
+azienda: <a href="https://www.facebook.com/studioitaliatech" alt="link alla pagina Facebook di Studio Italia Tech Srl" target="blank">Studio Italia Tech s.r.l.</a>, Via Pialoi 30 - 30020 Marcon - Venezia (Italia)
+attivita:
+- "Full-stack con php"
+- "Applicazioni Electron distribuiti localmente con CouchDB"
+- "Database NoSQL con CouchDB e replice in PouchDB per la gestione automatica di task"
+- "Automazione di alcuni processi ripetitivi emulabili attraverso script con linguaggi di programmazione"
+settore: "Informatica"
