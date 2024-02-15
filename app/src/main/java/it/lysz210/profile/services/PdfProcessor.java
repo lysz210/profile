@@ -1,7 +1,9 @@
 package it.lysz210.profile.services;
 
-import java.io.Writer;
+import com.fasterxml.jackson.databind.node.ObjectNode;
+
+import java.util.Map;
 
 public interface PdfProcessor {
-    void generate(Writer writer);
+    byte[] generate(Map<String, ObjectNode> context);
 }

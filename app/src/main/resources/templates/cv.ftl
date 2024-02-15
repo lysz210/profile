@@ -1,4 +1,6 @@
+<#ftl output_format="HTML">
 <!DOCTYPE html>
+<#assign me=.data_model['/me/index.yaml']>
 <html lang="{{ App::currentLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -7,10 +9,10 @@
     Remove this if you use the .htaccess -->
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>Curriculum vitae di Lingyong Sun</title>
-    <meta name="description" content="Curriculum vitae di Lingyong Sun aggiornato a Settembre 2015">
-    <meta name="author" content="Linyong Sun">
-    <meta name="keywords" content="curriculum vitae, cv, curriculum, Lingyong, Sun, Lingyong Sun"/>
+    <title>Curriculum vitae di ${ me.name } ${ me.surname }</title>
+    <meta name="description" content="Curriculum vitae di ${ me.name } ${ me.surname } aggiornato a Settembre 2015">
+    <meta name="author" content="${ me.name } ${ me.surname }">
+    <meta name="keywords" content="curriculum vitae, cv, curriculum, ${ me.name }, ${ me.surname }, ${ me.name } ${ me.surname }"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
@@ -19,6 +21,11 @@
 </head>
 
 <body>
+<pre>
+    <#list .data_model?keys as k>
+        ${k}
+    </#list>
+</pre>
     <header>
     	<h1>
     		<img class="logo-auropass" src="{{ $path('/images/europass-inline.svg') }}" alt="logo europass" title="logo europass" />
@@ -36,7 +43,7 @@
             </dt>
             <dd>
                 <p>
-                    <span id="nome">Lingyong</span> <span id="cognome">Sun</span>
+                    <span id="nome">${ me.name }</span> <span id="cognome">${ me.surname }</span>
                 </p>
             </dd>
             @if($withMail)
