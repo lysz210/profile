@@ -1,6 +1,6 @@
 <#ftl output_format="HTML">
 <!DOCTYPE html>
-<#assign me=.data_model['/me/index.yaml']>
+<#assign me=profile.get('/me/index.yaml')>
 <html lang="{{ App::currentLocale() }}">
 <head>
     <meta charset="utf-8">
@@ -21,11 +21,6 @@
 </head>
 
 <body>
-<pre>
-    <#list .data_model?keys as k>
-        ${k}
-    </#list>
-</pre>
     <header>
     	<h1>
     		<img class="logo-auropass" src="{{ $path('/images/europass-inline.svg') }}" alt="logo europass" title="logo europass" />
@@ -55,12 +50,12 @@
             </dt>
             <dd>
                 <dl id="contatti_social">
-                    @foreach (json_decode(Storage::disk('data')->get('me/social-accounts.json')) as $social)
-                    <dt>{{ $social->name }}</dt>
+                    <#list profile.getList("/me/social-accounts") as social>
+                    <dt>${ social.name }</dt>
                     <dd>
-                        <a href="{{ $social->url }}" target="blank">{{ $social->username }}</a>
+                        <a href="${ social.url }" title="${ social.name }" alt="${ social.name }" target="blank">${ social.username }</a>
                     </dd>
-                    @endforeach
+                    </#list>
                     <dt>
                         Skype
                     </dt>
@@ -71,7 +66,7 @@
                         Curriculum online
                     </dt>
                     <dd class="print_only">
-                        <a href="{{Request::url()}}" target="blank">Curriculum vitae online</a>
+                        <a href="${ cvLink }" target="blank">Curriculum vitae online</a>
                     </dd>
                 </dl>
             </dd>
@@ -85,25 +80,25 @@
     <section id="esperienze_professionali">
         <h1>{{__('cv.lavoro.title')}}</h1>
         <dl>
-        @foreach(__('cv.lavoro.esperienze') as $esperienza)
-            <dt>{{$esperienza['periodo']}}</dt>
+            <#list profile.getList("/me/work-experiences/")?sort_by('from')?reverse as esperienza>
+            <dt>${ esperienza.periodo }</dt>
             <dd>
-                <h2>{!! $esperienza['ruolo'] !!}</h2>
+                <h2>${ esperienza.ruolo?no_esc }</h2>
                 <p>
-                    {!! $esperienza['azienda'] !!}
+                    ${ esperienza.azienda?no_esc }
                 </p>
-                @isset($esperienza['attivita'])
+                <#if esperienza.attivita?has_content>
                 <ul>
-                @foreach($esperienza['attivita'] as $attivita)
-                    <li>{{ $attivita }}</li>
-                @endforeach
+                    <#list esperienza.attivita as attivita>
+                    <li>${ attivita }</li>
+                    </#list>
                 </ul>
-                @endisset
+                </#if>
                 <p class="settore">
-                    {{ $esperienza['settore'] }}
+                    ${ esperienza.settore }
                 </p>
             </dd>
-        @endforeach
+            </#list>
     </section>
     <!-- fine esperienze lavorative -->
 
@@ -111,23 +106,24 @@
     <section id="istruzione e formazione">
         <h1>{{ __('cv.istruzione.title') }}</h1>
         <dl>
-        @foreach(__('cv.istruzione.corsi') as $corso)
+            <#list profile.getList('/me/knowledge/education/')?sort_by('from')?reverse as corso>
             <dt>
-                {{ $corso['periodo'] }}
+                ${ corso.periodo }
             </dt>
             <dd>
-                {!! $corso['istituto'] !!}
+                ${ corso.istituto?no_esc }
                 <p>
-                    {!! $corso['corso'] !!}
+                    ${ corso.corso?no_esc }
                 </p>
             </dd>
-        @endforeach
+            </#list>
         </dl>
     </section>
     <!-- fine iscruzione e formazione -->
 
     <!-- competenze -->
     <section id="competenze_personali">
+    <#assign languages=profile.get('/me/knowledge/languages.yaml')>
         <h1>{{ __('cv.competenze.title') }}</h1>
 
         <dl>
@@ -136,7 +132,7 @@
                 {{ __('cv.competenze.lingue.madre.title') }}
             </dt>
             <dd>
-                {{ __('cv.competenze.lingue.madre.content') }}
+                ${ languages['mother-tongue'] }
             </dd>
 
             <dt>
@@ -153,14 +149,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach(__('cv.competenze.lingue.altre.list') as $lingua)
+                        <#list languages.others as language>
                         <tr>
-                            <td>{{ $lingua['name'] }}</td>
-                            @foreach(__('cv.competenze.lingue.altre.cols') as $k => $v)
-                            <td>{{ $lingua[$k] }}</td>
-                            @endforeach
+                            <td>${ language.name }</td>
+                            <td>${ language.comprensione }</td>
+                            <td>${ language.parlato }</td>
+                            <td>${ language.scritto }</td>
                         </tr>
-                        @endforeach
+                        </#list>
                     </tbody>
                     <tfoot>
                         <tr>
@@ -176,6 +172,27 @@
                 {{ __('cv.competenze.informatiche.title') }}
             </dt>
             <dd>
+                <ul>
+                    <#list profile.getList('/me/knowledge/it-skills/') as skill>
+                    <li>
+                        ${ skill.title }
+                        <#if skill.content?has_content>
+                        <ul>
+                            <#list skill.content as subSkill>
+                            <li>
+                                ${ subSkill.title }
+                                <#if subSkill.content?has_content>
+                                <p>
+                                    <#list subSkill.content as subSkillSpec><span>${ subSkillSpec }</span><#sep> - </#sep></#list>
+                                </p>
+                                </#if>
+                            </li>
+                            </#list>
+                        </ul>
+                        </#if>
+                    </li>
+                    </#list>
+                </ul>
                 <x-lista :value="__('cv.competenze.informatiche.list')"></x-lista>
             </dd>
 
