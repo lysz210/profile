@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStreamWriter;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -36,9 +37,9 @@ public class CvPdfGenerator implements PdfProcessor {
 
     @SneakyThrows
     @Override
-    public byte[] generate(Map<String, ObjectNode> context) {
+    public byte[] generate(Locale locale, Map<String, ObjectNode> context) {
 
-        final var tpl = configuration.getTemplate("cv.ftl");
+        final var tpl = configuration.getTemplate("cv.ftlh");
 
         var om = new ObjectMapper();
 
@@ -53,6 +54,7 @@ public class CvPdfGenerator implements PdfProcessor {
         final var outStream = new ByteArrayOutputStream();
         final var writer = new OutputStreamWriter(outStream);
         tpl.process(Map.of(
+                "locale", locale,
                 "profile", new ProfileModel(profile),
                 "cvLink", "https://lysz210.name"
         ), writer);
