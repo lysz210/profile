@@ -1,4 +1,3 @@
-<#ftl output_format="HTML">
 <!DOCTYPE html>
 <#assign me=profile.get('/me/index.yaml')>
 <html lang="{{ App::currentLocale() }}">
@@ -17,13 +16,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
 
     <!-- Replace favicon.ico & apple-touch-icon.png in the root of your domain and delete these references -->
-    <link rel="stylesheet" type="text/css" href="{{ $path('/css/main_style.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ $path('/css/main_style.css') }">
 </head>
 
 <body>
     <header>
     	<h1>
-    		<img class="logo-auropass" src="{{ $path('/images/europass-inline.svg') }}" alt="logo europass" title="logo europass" />
+    		<img class="logo-auropass" src="{{ $path('/images/europass-inline.svg') }" alt="logo europass" title="logo europass" />
     		<span>Curriculum Vitae</span>
     	</h1>
     </header>
@@ -31,10 +30,10 @@
     informazioni personali
     -->
     <section id="informazioni_personali">
-        <h1>{{__('cv.anagrafica.title')}}</h1>
+        <h1>${ i18n.translate('anagrafica.title') }</h1>
         <dl>
             <dt>
-                {{__('cv.anagrafica.nominativo.title')}}
+                ${ i18n.translate('anagrafica.nominativo.title') }
             </dt>
             <dd>
                 <p>
@@ -43,10 +42,10 @@
             </dd>
             @if($withMail)
             <dt>Email</dt>
-            <dd>{{ env('MAIL_PERSONAL') }}</dd>
+            <dd>{{ env('MAIL_PERSONAL') }</dd>
             @endif
             <dt>
-                {{__('cv.anagrafica.socials.title')}}
+                ${ i18n.translate('anagrafica.socials.title') }
             </dt>
             <dd>
                 <dl id="contatti_social">
@@ -78,7 +77,7 @@
     esperienze lavorative
     -->
     <section id="esperienze_professionali">
-        <h1>{{__('cv.lavoro.title')}}</h1>
+        <h1>${ i18n.translate('lavoro.title') }</h1>
         <dl>
             <#list profile.getList("/me/work-experiences/")?sort_by('from')?reverse as esperienza>
             <dt>${ esperienza.periodo }</dt>
@@ -104,7 +103,7 @@
 
     <!-- istruzione e formazione -->
     <section id="istruzione e formazione">
-        <h1>{{ __('cv.istruzione.title') }}</h1>
+        <h1>${ i18n.translate('istruzione.title') }</h1>
         <dl>
             <#list profile.getList('/me/knowledge/education/')?sort_by('from')?reverse as corso>
             <dt>
@@ -124,28 +123,28 @@
     <!-- competenze -->
     <section id="competenze_personali">
     <#assign languages=profile.get('/me/knowledge/languages.yaml')>
-        <h1>{{ __('cv.competenze.title') }}</h1>
+        <h1>${ i18n.translate('competenze.title') }</h1>
 
         <dl>
 
             <dt>
-                {{ __('cv.competenze.lingue.madre.title') }}
+                ${ i18n.translate('competenze.lingue.madre.title') }
             </dt>
             <dd>
                 ${ languages['mother-tongue'] }
             </dd>
 
             <dt>
-                {{ __('cv.competenze.lingue.altre.title') }}
+                ${ i18n.translate('competenze.lingue.altre.title') }
             </dt>
             <dd>
                 <table>
                     <thead>
                         <tr>
                             <th> </th>
-                            @foreach(__('cv.competenze.lingue.altre.cols') as $col)
-                            <th>{{ $col }}</th>
-                            @endforeach
+                            <th>${ i18n.translate('competenze.lingue.altre.cols.comprensione') }</th>
+                            <th>${ i18n.translate('competenze.lingue.altre.cols.parlato') }</th>
+                            <th>${ i18n.translate('competenze.lingue.altre.cols.scritto') }</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -161,7 +160,7 @@
                     <tfoot>
                         <tr>
                             <td colspan="6">
-                                {!! __('cv.competenze.lingue.altre.footer') !!}
+                                ${ i18n.translate('competenze.lingue.altre.footer')?no_esc }
                             </td>
                         </tr>
                     </tfoot>
@@ -169,7 +168,7 @@
             </dd>
 
             <dt>
-                {{ __('cv.competenze.informatiche.title') }}
+                ${ i18n.translate('competenze.informatiche.title') }
             </dt>
             <dd>
                 <ul>
@@ -193,26 +192,26 @@
                     </li>
                     </#list>
                 </ul>
-                <x-lista :value="__('cv.competenze.informatiche.list')"></x-lista>
             </dd>
 
             <dt>
-                {{ __('cv.competenze.patente.title') }}
+                ${ i18n.translate('competenze.patente.title') }
             </dt>
             <dd>
-                {{ __('cv.competenze.patente.content') }}
+                ${ me.drivingLicence }
             </dd>
         </dl>
     </section>
     <!-- fine competenze -->
 
-    @if(Lang::has('cv.cdt'))
+    <#attempt>
     <section id="consenso_td">
     	<h1>
-    		{{ __('cv.cdt.title') }}
+    		${ i18n.translate('cdt.title') }
     	</h1>
-    	<p>{{ __('cv.cdt.content') }}</p>
+    	<p>${ i18n.translate('cdt.content') }</p>
     </section>
-    @endif
+    <#recover>
+    </#attempt>
 </body>
 </html>

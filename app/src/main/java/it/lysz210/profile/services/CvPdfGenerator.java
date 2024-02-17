@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import freemarker.template.Configuration;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
+import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayOutputStream;
@@ -20,6 +21,24 @@ import java.util.stream.Collectors;
 @Service
 public class CvPdfGenerator implements PdfProcessor {
     private final Configuration configuration;
+    private final MessageSource messages;
+
+    public record I18nMessages (
+            MessageSource messages,
+            Locale locale
+    ) {
+        public String translate(String path, Locale locale) {
+            try {
+                return messages.getMessage(path, null, locale);
+            } catch (Exception ex) {
+                return null;
+            }
+        }
+
+        public String translate(String path) {
+            return this.translate(path, this.locale);
+        }
+    }
 
     public record ProfileModel(
             Map<String, Map<String, Object>> data
@@ -53,8 +72,9 @@ public class CvPdfGenerator implements PdfProcessor {
 
         final var outStream = new ByteArrayOutputStream();
         final var writer = new OutputStreamWriter(outStream);
+        final var i18n = new I18nMessages(this.messages, locale);
         tpl.process(Map.of(
-                "locale", locale,
+                "i18n", i18n,
                 "profile", new ProfileModel(profile),
                 "cvLink", "https://lysz210.name"
         ), writer);
