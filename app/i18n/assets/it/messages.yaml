@@ -1,0 +1,37 @@
+anagrafica:
+  title: Informazioni personali
+  nominativo:
+    title: Informazioni personali
+  socials:
+    title: Contatti social
+
+lavoro:
+  title: Esperienze professionali
+
+istruzione:
+  title: Istruzione e formazione
+
+competenze:
+  title: Competenze personali
+  lingue:
+    madre:
+      title: Lingua madre
+    altre:
+      title: Altre lingue
+      cols:
+        comprensione: Comprensione
+        parlato: Parlato
+        scritto: Scritto
+      footer: Livelli: A1/2 Livello base - B1/2 Livello intermedio - C1/2 Livello avanzato\
+<br />\
+Quadro Comune Europeo di Riferimento delle Lingue
+competenze:
+  informatiche:
+    title: Competenze informatiche
+  patente:
+    title: Patende di guida
+
+cdt:
+  title: Consenso al trattamento dei dati
+cdt:
+  content: Autorizzo il trattamento dei miei dati personali ai sensi del GDPR e del Decreto Legislativo 30 giugno 2003, n. 196 ?Codice in materia di protezione dei dati personali? ai fini di attivit� di Ricerca e Selezione del Personale e contatti lavorativi.
