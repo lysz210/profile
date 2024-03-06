@@ -19,10 +19,11 @@ mix
                     compiler.hooks.done.tapPromise('Pdf', async () => {
                         const browser = await puppeteer.launch({headless: true});
                         const page = await browser.newPage()
-                        await page.goto(`file://${path.resolve(__dirname, 'dist-static', 'cv.html')}`, {waitUntil: 'networkidle0'})
+                        const uri = `file://${path.resolve(__dirname, 'dist-static', 'cv.html')}`
+                        console.log(uri)
+                        await page.goto(uri, {waitUntil: 'networkidle0'})
                         const pdf = await page.pdf({ format: 'A4' })
-                        const f = new File(path.resolve(__dirname, 'dist/i18n', 'cv.pdf'))
-                        f.write(pdf.toString())
+                        writeFileSync(path.resolve(__dirname, 'dist/i18n', 'cv.pdf'), pdf)
 
                         await browser.close()
                     })
