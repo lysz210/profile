@@ -1,13 +1,16 @@
 const mix = require('laravel-mix');
 
 // plugins
-require('laravel-mix-clean');
 require('laravel-mix-ejs')
 
 const OUTPUT_DIR = 'dist-static'
 
 mix
-    .clean()
+    .webpackConfig({
+        output: {
+            clean: true
+        }
+    })
     .ejs(
         'app/templates',
         OUTPUT_DIR,
