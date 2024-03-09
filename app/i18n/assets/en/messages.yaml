@@ -15,7 +15,6 @@ istruzione:
 
 competenze:
   title: Personal skills
-competenze:
   lingue:
     madre:
       title: Mother tongue
@@ -25,10 +24,9 @@ competenze:
         comprensione: Understanding
         parlato: Speaking
         scritto: Writing
-      footer: Levels: A1/2: Basic user - B1/2: Independent user - C1/2 Proficient user\
-<br />\
-Common European Framework of Reference for Languages"
-competenze:
+      footer: 'Levels: A1/2: Basic user - B1/2: Independent user - C1/2 Proficient user
+<br />
+Common European Framework of Reference for Languages'
   informatiche:
     title: IT skills
   patente:
