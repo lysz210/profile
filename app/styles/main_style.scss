@@ -1,0 +1,162 @@
+@import './meyer-reset';
+
+html {
+    font-size: 12px;
+}
+
+body {
+    min-width: 600px;
+    max-width: 800px;
+    margin: {
+        left: auto;
+        right: auto;
+    }
+    line-height: 1.2;
+
+    * {
+        box-sizing: border-box;
+    }
+
+    & > * {
+        position: relative;
+        display: block;
+    }
+}
+
+a {
+    text-decoration: underline;
+    color: inherit;
+}
+
+ul {
+    list-style: square;
+    padding-left: 1.5rem;
+}
+
+header {
+    h1 {
+        font: {
+            variant: small-caps;
+            weight: 800;
+            size: 1rem;
+        }
+        text-align: center;
+
+        .logo-europass {
+            /*
+            * posizionamento del logo
+            * in modo che la scritta
+            * curriculum sia sotto pass
+            * il posizionamento relativo
+            * non garantisce la centratura del gruppo
+            * l'uso degli em garantisce il posizionamento
+            * riproporzionando esclusivamente le dimensioni
+            * del parent
+            */
+            height: 4em;
+            margin: {
+                right: -5em;
+                bottom: -0.3em;
+            }
+        }
+    }
+}
+
+dl {
+    position: relative;
+}
+
+section {
+    page-break-inside: avoid;
+    margin: {
+        top: 0.5rem;
+        bottom: 0;
+    }
+    border-bottom: 2px solid #2056AE;
+    padding: {
+        right: 1.2rem;
+        left: 1.2rem;
+        bottom: 0.5rem;
+    }
+    h1 {
+        color: #82b9de;
+        font: {
+            weight: 800;
+            variant: small-caps;
+            size: 1.6rem;
+        }
+    }
+
+    & > dl {
+        & > dt {
+            color: #2056AE;
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            width: 100%;
+            display: block;
+            text-align: left;
+        }
+        
+        & > dd {
+            margin-bottom: 0.2rem;
+            display: block;
+            width: 100%;
+            padding-left: 1.2rem;
+        }
+    }
+    
+}
+
+#consenso_td {
+    border-bottom: none;
+}
+
+ul.list-inline {
+    & > li {
+        display: inline;
+        white-space: nowrap;
+
+        &::after {
+            content: ' - ';
+        }
+        &:last-child::after {
+            content: none;
+        }
+    }
+}
+
+#contatti_social {
+    padding-left: 0;
+}
+
+tbody {
+    td {
+        text-align: center;
+        &:first-child {
+            text-align: left;
+        }
+    }
+}
+
+tfoot {
+    font-size: 0.8rem;
+}
+
+#consenso_td p {
+    font-style: italic;
+    padding-top: 0.5rem;
+}
+
+#nome,
+#cognome {
+    font-variant: small-caps;
+    font-weight: 600;
+}
+
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
+}

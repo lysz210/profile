@@ -1,8 +1,0 @@
-title: "Programmazione in PHP"
-content:
-- title: "Livello avanzato anche OOP"
-- title: "Uso di Composer"
-- title: "Frameworks"
-  content:
-  - "Laravel"
-  - "Zend Framework (solo moduli, principalmente Mail e DB)"

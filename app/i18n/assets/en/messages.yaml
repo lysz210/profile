@@ -1,0 +1,37 @@
+hello: world
+
+anagrafica:
+  title: Personal information
+  nominativo:
+    title: Name Surname
+  socials:
+    title: Socials
+
+lavoro:
+  title: Work experience
+
+istruzione:
+  title: Istruzione e formazione
+
+competenze:
+  title: Personal skills
+  lingue:
+    madre:
+      title: Mother tongue
+    altre:
+      title: Other languages
+      cols:
+        comprensione: Understanding
+        parlato: Speaking
+        scritto: Writing
+      footer: 'Levels: A1/2: Basic user - B1/2: Independent user - C1/2 Proficient user
+<br />
+Common European Framework of Reference for Languages'
+  informatiche:
+    title: IT skills
+  patente:
+    title: Driving licence
+
+cdt:
+  title: Consent to the processing of personal information
+  content: According to law 679/2016 of the Regulation of the European Parliament of 27th April 2016, I hereby express my consent to process and use my data provided in this CV and application for recruiting purposes

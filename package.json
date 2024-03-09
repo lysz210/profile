@@ -1,0 +1,34 @@
+{
+  "name": "profile",
+  "version": "1.0.0",
+  "description": "lysz210 public profile data",
+  "main": "index.js",
+  "scripts": {
+    "pdf": "node app/generate-pdf.js",
+    "build": "mix",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lysz210/profile.git"
+  },
+  "keywords": [
+    "lysz210"
+  ],
+  "author": "lingyong.sun",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lysz210/profile/issues"
+  },
+  "homepage": "https://github.com/lysz210/profile#readme",
+  "devDependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "ejs": "^3.1.9",
+    "glob": "^10.3.10",
+    "js-yaml": "^4.1.0",
+    "laravel-mix": "^6.0.49",
+    "lodash": "^4.17.21",
+    "puppeteer": "^22.4.0",
+    "sass": "^1.71.1"
+  }
+}

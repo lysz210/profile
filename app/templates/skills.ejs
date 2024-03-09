@@ -1,0 +1,27 @@
+<section id="competenze_personali">
+    <h1><%= messages.competenze.title %></h1>
+
+    <dl>
+        <% for (const skill of skills) { %>
+            <dt><%= skill.title %></dt>
+            <dd>
+                <% if (skill.content) { %>
+                    <ul>
+                        <% for(const subSkill of skill.content) { %>
+                            <li>
+                                <%= subSkill.title %>
+                                <% if (subSkill.content) { %>
+                                <ul class="list-inline">
+                                    <% for (const subSkillSpec of subSkill.content) { %>
+                                        <li><%= subSkillSpec %></li>
+                                    <% } %>
+                                </ul>
+                                <% } %>
+                            </li>
+                        <% } %>
+                    </ul>
+                <% } %>
+            </dd>
+        <% } %>
+    </dl>
+</section>

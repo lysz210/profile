@@ -1,0 +1,30 @@
+<section id="informazioni_personali">
+    <h1><%= messages.anagrafica.title %></h1>
+    <dl>
+        <dt>
+            <%= messages.anagrafica.nominativo.title %>
+        </dt>
+        <dd>
+            <p>
+                <span id="nome"><%= me.name %></span> <span id="cognome"><%= me.surname %></span>
+            </p>
+        </dd>
+        <dt>
+            <%= messages.anagrafica.socials.title %>
+        </dt>
+        <dd>
+            <ul id="contatti_social" class="list-inline">
+                <% for (const social of socials) { %>
+                    <li>
+                        <span class="social-name"><%= social.name %></span>:
+                        <% if (social.url) { %>
+                            <a class="social-account" href="<%= social.url %>" title="<%= social.name %>" alt="<%= social.name %>" target="blank"><%= social.username %></a>
+                        <% } else { %>
+                            <span class="social-account"><%= social.username %></span>
+                        <% } %>
+                    </li>
+                <% } %>
+            </ul>
+        </dd>
+    </dl>
+</section>

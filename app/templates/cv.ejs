@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="{{ App::currentLocale() }}">
+<head>
+    <meta charset="utf-8">
+
+    <title>Curriculum vitae di <%= profile.me.name %> <%= profile.me.surname %></title>
+    <meta name="description" content="Curriculum vitae di <%= profile.me.name %> <%= profile.me.surname %> aggiornato a Settembre 2015">
+    <meta name="author" content="<%= profile.me.name %> <%= profile.me.surname %>">
+    <meta name="keywords" content="curriculum vitae, cv, curriculum, <%= profile.me.name %>, <%= profile.me.surname %>, <%= profile.me.name %> <%= profile.me.surname %>"/>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, minimal-ui">
+</head>
+
+<body>
+    <header>
+    	<h1>
+    		<img class="logo-europass" src="<%= logoEuropass %>" alt="logo europass" title="logo europass" />
+    		<span>Curriculum Vitae</span>
+    	</h1>
+    </header>
+    <!--
+    informazioni personali
+    -->
+    <%- include('personal-data', { messages, socials: profile.socials, me: profile.me }) %>
+    <!-- fine informazioni personali -->
+
+    <!--
+    esperienze lavorative
+    -->
+    <%- include('work-experiences', { messages, works: profile.works }) %>
+    <!-- fine esperienze lavorative -->
+
+    <!-- istruzione e formazione -->
+    <%- include('educations', { messages, educations: profile.educations, drivingLicence: profile.me.drivingLicence }) %>
+    <!-- fine iscruzione e formazione -->
+
+    <!-- competenze -->
+    <%- include('skills', { messages, skills: profile.skills }) %>
+    <!-- fine competenze -->
+
+    <% if (messages?.cdt) { %>
+        <section id="consenso_td">
+            <h1>
+                <%= messages.cdt.title %>
+            </h1>
+            <p><%= messages.cdt.content %></p>
+        </section>
+    <% } %>
+</body>
+</html>
