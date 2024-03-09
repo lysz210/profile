@@ -1,0 +1,37 @@
+<section id="istruzione e formazione">
+    <h1><%= messages.istruzione.title %></h1>
+
+    <dl>
+        <% for (const corso of educations) { %>
+            <dt>
+                <strong><%- corso.corso %></strong>
+                -
+                <%- corso.istituto %>
+            </dt>
+            <dd>
+                <em><%= corso.periodo %></em>
+            </dd>
+        <% } %>
+
+        <dt>
+            <%= messages.competenze.lingue.madre.title %>
+        </dt>
+        <dd>
+            <%= profile.languages['mother-tongue'] %>
+        </dd>
+    
+        <dt>
+            <%= messages.competenze.lingue.altre.title %>
+        </dt>
+        <dd>
+            <%- include('languages', { messages, languages: profile.languages.others }) %>
+        </dd>
+
+        <dt>
+            <%= messages.competenze.patente.title %>
+        </dt>
+        <dd>
+            <%= drivingLicence %>
+        </dd>
+    </dl>
+</section>

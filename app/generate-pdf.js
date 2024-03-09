@@ -9,7 +9,8 @@ const { glob } = require('glob')
 const _ = require('lodash')
 
 const OUTPUT_DIR = 'pdf'
-const TEMPLATE_FILE = 'templates/cv.ejs'
+const TEMPLATES_DIR = 'templates'
+const TEMPLATE_FILE = 'cv.ejs'
 const STYLE_FILE = 'styles/main_style.scss'
 const I18N_DIR = 'i18n'
 const I18N_MESSAGES_DIR = 'assets'
@@ -34,6 +35,17 @@ async function generateData(dataDir) {
     const socials = _.sortBy(
         await loadAllYaml(dataDir, '../en/me/social-accounts'),
         'ord'
+    )
+    socials.push(
+        {
+            name: 'Skype',
+            username: 'lysz210'
+        },
+        {
+            name: 'Curriculum online',
+            url: 'https://lysz210.name',
+            username: 'Curriculum vitae online'
+        }
     )
     const works = _.reverse(_.sortBy(
         await loadAllYaml(profileDir, 'work-experiences'),
@@ -64,6 +76,7 @@ async function main() {
     const appDir = path.resolve(__dirname)
     const i18nMessageDir = path.resolve(appDir, I18N_DIR, I18N_MESSAGES_DIR)
     const i18nDataDir = path.resolve(appDir, I18N_DIR, I18N_DATA_DIR)
+    const templatesDir = path.resolve(appDir, TEMPLATES_DIR)
 
     await rm(outputDir, { recursive: true, force: true })
 
@@ -79,20 +92,32 @@ async function main() {
         const messages = await loadYaml(messagesFile)
 
         const profile = await generateData(localeDataDir)
-        console.log(profile)
-        
+        const svgLogo = await readFile(path.resolve(appDir, 'images/europass-inline.svg'))
+        const logoEuropass = `data:image/svg+xml;base64,${svgLogo.toString('base64')}`
         const html = await ejs.renderFile(
-            path.resolve(appDir, TEMPLATE_FILE),
+            path.resolve(templatesDir, TEMPLATE_FILE),
             {
                 messages,
                 profile,
-                cvLink: 'https://lysz210.name'
+                logoEuropass
+            },
+            {
+                root: templatesDir
             }
         )
         await page.setContent(html, {waitUntil: 'networkidle0'})
         await page.addStyleTag({ content: css })
-        const pdf = await page.pdf({ format: 'A4' })
-        await writeFile(path.resolve(localeOutputDir, 'cv.pdf'), pdf)
+        await page.emulateMediaType('print')
+        await page.pdf({
+            format: 'A4',
+            margin: {
+                top: '0.5in',
+                right: '0.5in',
+                bottom: '0.5in',
+                left: '0.5in'
+            },
+            path: path.resolve(localeOutputDir, 'cv.pdf')
+        })
     }
     await browser.close()
 

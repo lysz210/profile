@@ -14,185 +14,28 @@
 <body>
     <header>
     	<h1>
-    		<img class="logo-auropass" src="{{ $path('/images/europass-inline.svg') }" alt="logo europass" title="logo europass" />
+    		<img class="logo-europass" src="<%= logoEuropass %>" alt="logo europass" title="logo europass" />
     		<span>Curriculum Vitae</span>
     	</h1>
     </header>
     <!--
     informazioni personali
     -->
-    <section id="informazioni_personali">
-        <h1><%= messages.anagrafica.title %></h1>
-        <dl>
-            <dt>
-                <%= messages.anagrafica.nominativo.title %>
-            </dt>
-            <dd>
-                <p>
-                    <span id="nome"><%= profile.me.name %></span> <span id="cognome"><%= profile.me.surname %></span>
-                </p>
-            </dd>
-            <dt>
-                <%= messages.anagrafica.socials.title %>
-            </dt>
-            <dd>
-                <dl id="contatti_social">
-                    <% for (const social of profile.socials) { %>
-                        <dt><%= social.name %></dt>
-                        <dd>
-                            <a href="<%= social.url %>" title="<%= social.name %>" alt="<%= social.name %>" target="blank"><%= social.username %></a>
-                        </dd>
-                    <% } %>
-                    <dt>
-                        Skype
-                    </dt>
-                    <dd class="last">
-                        lysz210
-                    </dd>
-                    <dt class="print_only">
-                        Curriculum online
-                    </dt>
-                    <dd class="print_only">
-                        <a href="<%= cvLink %>" target="blank">Curriculum vitae online</a>
-                    </dd>
-                </dl>
-            </dd>
-        </dl>
-    </section>
+    <%- include('personal-data', { messages, socials: profile.socials, me: profile.me }) %>
     <!-- fine informazioni personali -->
 
     <!--
     esperienze lavorative
     -->
-    <section id="esperienze_professionali">
-        <h1><%= messages.lavoro.title %></h1>
-        <dl>
-            <% for(const esperienza of profile.works) { %>
-            
-                <dt><%= esperienza.periodo %></dt>
-                <dd>
-                    <h2><%- esperienza.ruolo %></h2>
-                    <p>
-                        <%- esperienza.azienda %>
-                    </p>
-                    <% if (esperienza.attivita) { %>
-                    <ul>
-                        <% for (const attivita of esperienza.attivita) { %>
-                            <li><%= attivita %></li>
-                        <% } %>
-                    </ul>
-                    <% } %>
-                    <p class="settore">
-                        <%= esperienza.settore %>
-                    </p>
-                </dd>
-            <% } %>
-        </dl>
-    </section>
+    <%- include('work-experiences', { messages, works: profile.works }) %>
     <!-- fine esperienze lavorative -->
 
     <!-- istruzione e formazione -->
-    <section id="istruzione e formazione">
-        <h1><%= messages.istruzione.title %></h1>
-        <dl>
-            <% for (const corso of profile.educations) { %>
-                <dt>
-                    <%= corso.periodo %>
-                </dt>
-                <dd>
-                    <%- corso.istituto %>
-                    <p>
-                        <%- corso.corso %>
-                    </p>
-                </dd>
-            <% } %>
-        </dl>
-    </section>
+    <%- include('educations', { messages, educations: profile.educations, drivingLicence: profile.me.drivingLicence }) %>
     <!-- fine iscruzione e formazione -->
 
     <!-- competenze -->
-    <section id="competenze_personali">
-        <h1><%= messages.competenze.title %></h1>
-
-        <dl>
-
-            <dt>
-                <%= messages.competenze.lingue.madre.title %>
-            </dt>
-            <dd>
-                <%= profile.languages['mother-tongue'] %>
-            </dd>
-
-            <dt>
-                <%= messages.competenze.lingue.altre.title %>
-            </dt>
-            <dd>
-                <table>
-                    <thead>
-                        <tr>
-                            <th> </th>
-                            <th><%= messages.competenze.lingue.altre.cols.comprensione %></th>
-                            <th><%= messages.competenze.lingue.altre.cols.parlato %></th>
-                            <th><%= messages.competenze.lingue.altre.cols.scritto %></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <% for (const language of profile.languages.others) { %>
-                            <tr>
-                                <td><% language.name %></td>
-                                <td><% language.comprensione %></td>
-                                <td><% language.parlato %></td>
-                                <td><% language.scritto %></td>
-                            </tr>
-                        <% } %>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <td colspan="6">
-                                <%- messages.competenze.lingue.altre.footer %>
-                            </td>
-                        </tr>
-                    </tfoot>
-                </table>
-            </dd>
-
-            <dt>
-                <%= messages.competenze.informatiche.title %>
-            </dt>
-            <dd>
-                <ul>
-                    <% for (const skill of profile.skills) { %>
-                        <li>
-                            <%= skill.title %>
-                            <% if (skill.content) { %>
-                                <ul>
-                                    <% for(const subSkill of skill.content) { %>
-                                        <li>
-                                            <%= subSkill.title %>
-                                            <% if (subSkill.content) { %>
-                                            <p>
-                                                <% for (const subSkillSpec of subSkill.content) { %>
-                                                    <span><%= subSkillSpec %></span>
-                                                <% } %>
-                                            </p>
-                                            <% } %>
-                                        </li>
-                                    <% } %>
-                                </ul>
-                            <% } %>
-                        </li>
-                    <% } %>
-                </ul>
-            </dd>
-
-            <dt>
-                <%= messages.competenze.patente.title %>
-            </dt>
-            <dd>
-                <%= profile.me.drivingLicence %>
-            </dd>
-        </dl>
-    </section>
+    <%- include('skills', { messages, skills: profile.skills }) %>
     <!-- fine competenze -->
 
     <% if (messages?.cdt) { %>

@@ -1,21 +1,17 @@
-@import './mixins';
 @import './meyer-reset';
 
 html {
-    font-size: 16px;
+    font-size: 12px;
 }
 
 body {
     min-width: 600px;
     max-width: 800px;
-    margin-left: auto;
-    margin-right: auto;
-    line-height: 1.3;
-
-    @include mobile {
-        min-width: 320px;
-        padding-top: 0.6rem;
+    margin: {
+        left: auto;
+        right: auto;
     }
+    line-height: 1.2;
 
     * {
         box-sizing: border-box;
@@ -28,26 +24,8 @@ body {
 }
 
 a {
-    text-decoration: none;
+    text-decoration: underline;
     color: inherit;
-
-    &:hover {
-        text-decoration: underline;
-        font-style: italic;
-    }
-
-    &:active {
-        color: #FF0000;
-    }
-
-    &:focus {
-        color: #555555;
-        font-style: italic;
-    }
-}
-
-h1 {
-    font-size: 1.1rem;
 }
 
 ul {
@@ -57,14 +35,14 @@ ul {
 
 header {
     h1 {
-        font-variant: small-caps;
-        font-weight: 800;
-        text-align: right;
-        @include mobile {
-            text-align: center;
+        font: {
+            variant: small-caps;
+            weight: 800;
+            size: 1rem;
         }
+        text-align: center;
 
-        .logo-auropass {
+        .logo-europass {
             /*
             * posizionamento del logo
             * in modo che la scritta
@@ -76,8 +54,10 @@ header {
             * del parent
             */
             height: 4em;
-            margin-right: -5em;
-            margin-bottom: -0.3em;
+            margin: {
+                right: -5em;
+                bottom: -0.3em;
+            }
         }
     }
 }
@@ -87,48 +67,41 @@ dl {
 }
 
 section {
-    margin-top: 1rem;
-    margin-bottom: 0.5rem;
-    border-bottom: 2px solid #2056AE;
-    @include mobile {
-        padding-right: 1.2rem;
-        padding-left: 1.2rem;
+    page-break-inside: avoid;
+    margin: {
+        top: 0.5rem;
+        bottom: 0;
     }
-
+    border-bottom: 2px solid #2056AE;
+    padding: {
+        right: 1.2rem;
+        left: 1.2rem;
+        bottom: 0.5rem;
+    }
     h1 {
         color: #82b9de;
-        font-weight: 600;
-        font-variant: small-caps;
-        font-size: 1.6rem;
+        font: {
+            weight: 800;
+            variant: small-caps;
+            size: 1.6rem;
+        }
     }
 
     & > dl {
         & > dt {
             color: #2056AE;
-            vertical-align: top;
-            text-align: right;
-            display: inline-block;
-            width: 34%;
-    
-            @include mobile {
-                margin-top: 0.5rem;
-                font-size: 1.2rem;
-                width: 100%;
-                display: block;
-                text-align: left;
-            }
+            margin-top: 0.5rem;
+            font-size: 1.2rem;
+            width: 100%;
+            display: block;
+            text-align: left;
         }
         
         & > dd {
-            vertical-align: top;
-            display: inline-block;
-            width: 65%;
-            margin-bottom: 0.5rem;
-            @include mobile {
-                display: block;
-                width: 100%;
-                padding-left: 1.2rem;
-            }
+            margin-bottom: 0.2rem;
+            display: block;
+            width: 100%;
+            padding-left: 1.2rem;
         }
     }
     
@@ -138,28 +111,22 @@ section {
     border-bottom: none;
 }
 
+ul.list-inline {
+    & > li {
+        display: inline;
+        white-space: nowrap;
+
+        &::after {
+            content: ' - ';
+        }
+        &:last-child::after {
+            content: none;
+        }
+    }
+}
+
 #contatti_social {
-    dt {
-        display: inline;
-        &::after {
-            content: ": ";
-        }
-    }
-
-    dd {
-        display: inline;
-        &::after {
-            content: "-";
-            white-space: pre;
-        }
-        &.last::after {
-            content: "";
-        }
-    }
-
-    .print_only {
-        display: none;
-    }
+    padding-left: 0;
 }
 
 tbody {
@@ -180,19 +147,16 @@ tfoot {
     padding-top: 0.5rem;
 }
 
-footer {
-    text-align: center;
-    padding-top: 1rem;
-    padding-bottom: 1.5rem;
-    color: #555555;
-}
-
 #nome,
 #cognome {
     font-variant: small-caps;
     font-weight: 600;
 }
 
-@media print {
-    @import './print.scss';
+strong {
+    font-weight: bold;
+}
+
+em {
+    font-style: italic;
 }

@@ -1,0 +1,25 @@
+<section id="esperienze_professionali">
+    <h1><%= messages.lavoro.title %></h1>
+    <dl>
+        <% for(const esperienza of works) { %>
+        
+            <dt><%= esperienza.periodo %></dt>
+            <dd>
+                <h2><%- esperienza.ruolo %></h2>
+                <p>
+                    <%- esperienza.azienda %>
+                </p>
+                <% if (esperienza.attivita) { %>
+                <ul>
+                    <% for (const attivita of esperienza.attivita) { %>
+                        <li><%= attivita %></li>
+                    <% } %>
+                </ul>
+                <% } %>
+                <p class="settore">
+                    <%= esperienza.settore %>
+                </p>
+            </dd>
+        <% } %>
+    </dl>
+</section>

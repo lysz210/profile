@@ -1,0 +1,27 @@
+<table>
+    <thead>
+        <tr>
+            <th> </th>
+            <th><%= messages.competenze.lingue.altre.cols.comprensione %></th>
+            <th><%= messages.competenze.lingue.altre.cols.parlato %></th>
+            <th><%= messages.competenze.lingue.altre.cols.scritto %></th>
+        </tr>
+    </thead>
+    <tbody>
+        <% for (const language of languages) { %>
+            <tr>
+                <td><%= language.name %></td>
+                <td><%= language.comprensione %></td>
+                <td><%= language.parlato %></td>
+                <td><%= language.scritto %></td>
+            </tr>
+        <% } %>
+    </tbody>
+    <tfoot>
+        <tr>
+            <td colspan="6">
+                <%- messages.competenze.lingue.altre.footer %>
+            </td>
+        </tr>
+    </tfoot>
+</table>
