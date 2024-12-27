@@ -4,7 +4,8 @@
     "ruolo": "Sviluppatore Backend Java",
     "azienda": "<a href=\"https://www.interlogica.it/about/\" alt=\"link al sito Interlogica\" target=\"blank\">Interlogica Srl</a>, Via Miranese, 91, 30174 Venezia VE",
     "attivita": [
-        "Sviluppo backend Unipol Rental"
+        "Sviluppo backend Unipol Rental",
+        "Modulo per fatturazione sviluppato con Yii2 framework"
     ],
     "settore": "Informatica"
 }
