@@ -1,0 +1,13 @@
+{
+    "from": "201608",
+    "periodo": "From August 2016 to December 2018",
+    "ruolo": "Web developer",
+    "azienda": "<a href=\"https://www.facebook.com/studioitaliatech\" alt=\"link to Studio Italia Tech Srl facebook page\" target=\"blank\">Studio Italia Tech s.r.l.</a>, Via Pialoi 30 - 30020 Marcon - Venezia (Italia)",
+    "attivita": [
+        "Full-stack with php",
+        "Electron application, distributed locally with CouchDB",
+        "Distributed NoSQL Database with CouchDB and PouchDB as client for automated task processing",
+        "Automation of repeatable tasks with scripting"
+    ],
+    "settore": "Information Technology"
+}

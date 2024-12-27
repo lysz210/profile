@@ -1,0 +1,19 @@
+{
+    "title": "PHP Programming",
+    "content": [
+        {
+            "title": "Advanced user including OOP"
+        },
+        {
+            "title": "Composer"
+        },
+        {
+            "title": "Frameworks",
+            "content": [
+                "Laravel",
+                "Zend Framework (only Mail and DB modules)"
+            ]
+        }
+    ],
+    "ord": 5
+}

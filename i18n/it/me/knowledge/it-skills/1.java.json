@@ -1,0 +1,24 @@
+{
+    "title": "Java 8+",
+    "content": [
+        {
+            "title": "Livello avanzato"
+        },
+        {
+            "title": "Springboot, JPA - Hibernate, Spring batch, PrimeFaces"
+        },
+        {
+            "title": "SonarLing"
+        },
+        {
+            "title": "Testing",
+            "content": [
+                "JUnit 5",
+                "Assertj",
+                "Contract test con Pact",
+                "Performance test con Gatling"
+            ]
+        }
+    ],
+    "ord": 1
+}
