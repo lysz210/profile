@@ -1,4 +1,4 @@
-const { rm, mkdir, writeFile, readFile } = require('fs/promises')
+const { rm, mkdir, readFile } = require('fs/promises')
 const path = require('path')
 
 const sass = require('sass')
