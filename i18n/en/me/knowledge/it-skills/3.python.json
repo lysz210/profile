@@ -1,0 +1,17 @@
+{
+    "title": "Python programming",
+    "content": [
+        {
+            "title": "Intermediate programmer"
+        },
+        {
+            "title": "Frameworks",
+            "content": [
+                "Langchain",
+                "Django",
+                "FastAPI"
+            ]
+        }
+    ],
+    "ord": 3
+}

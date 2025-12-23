@@ -1,20 +1,20 @@
 {
-    "title": "PHP Programming",
+    "title": "Programmazione in PHP",
     "content": [
         {
-            "title": "Advanced user including OOP"
+            "title": "Livello avanzato anche OOP"
         },
         {
-            "title": "Composer"
+            "title": "Uso di Composer"
         },
         {
             "title": "Frameworks",
             "content": [
                 "Laravel",
                 "Yii2",
-                "Zend Framework (only Mail and DB modules)"
+                "Zend Framework (solo moduli, principalmente Mail e DB)"
             ]
         }
     ],
-    "ord": 5
+    "ord": 6
 }

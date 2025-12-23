@@ -5,7 +5,8 @@
     "azienda": "<a href=\"https://www.interlogica.it/about/\" alt=\"link al sito Interlogica\" target=\"blank\">Interlogica Srl</a>, Via Miranese, 91, 30174 Venezia VE",
     "attivita": [
         "Sviluppo backend Unipol Rental",
-        "Modulo per fatturazione sviluppato con Yii2 framework"
+        "Modulo per fatturazione sviluppato con Yii2 framework",
+        "PoC per integrazione framework di AI"
     ],
     "settore": "Informatica"
 }

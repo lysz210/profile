@@ -5,4 +5,5 @@ azienda: <a href="https://www.interlogica.it/en/about/" alt="link to Interlogica
 attivita: 
 - "Backend developer for Unipol Rental"
 - "Billing module with Yii2 framework"
+- "PoC for AI frameworks integration"
 settore: "Information Tecnology"

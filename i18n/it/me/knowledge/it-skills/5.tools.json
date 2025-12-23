@@ -1,0 +1,26 @@
+{
+    "title": "Strumenti",
+    "content": [
+        {
+            "title": "CI/CD, Infrastructure & Quality",
+            "content": [
+                "Git",
+                "GitHub Actions",
+                "GitLab CI/CD",
+                "Jenkins",
+                "TravisCI",
+                "Docker",
+                "SonarQube",
+                "n8n"
+            ]
+        },
+        {
+            "title": "Monitoring & Observability",
+            "content": [
+                "Instana",
+                "Splunk"
+            ]
+        }
+    ],
+    "ord": 5
+}
