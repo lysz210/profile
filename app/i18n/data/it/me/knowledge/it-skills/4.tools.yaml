@@ -6,4 +6,6 @@ content:
 - title: "Docker - Mirantis"
 - title: "Instana"
 - title: "Splunk"
+- title: "SonarQube"
+- title: "n8n"
 ord: 4
