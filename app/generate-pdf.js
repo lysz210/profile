@@ -111,8 +111,12 @@ async function main() {
                 root: templatesDir
             }
         )
-        await page.setContent(html, {waitUntil: 'networkidle0'})
+        await page.setContent(html, {waitUntil: 'domcontentloaded'})
         await page.addStyleTag({ content: css })
+        // CRITICAL FOR PDFs: Wait for fonts to settle
+        // Without waitUntil networkidle0, we must ensure any fonts/layout
+        // defined in your CSS are actually rendered before taking the PDF.
+        await page.evaluate(() => document.fonts.ready);
         await page.emulateMediaType('print')
         await page.pdf({
             format: 'A4',
