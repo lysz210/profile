@@ -1,0 +1,9 @@
+title: "Programmazione in Python"
+content:
+- title: "Livello intermedio"
+- title: "Frameworks"
+  content:
+  - "Langchain"
+  - "Django"
+  - "FastAPI"
+ord: 3
