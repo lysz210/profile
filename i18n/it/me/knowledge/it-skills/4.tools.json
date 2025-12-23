@@ -18,6 +18,12 @@
         },
         {
             "title": "Splunk"
+        },
+        {
+            "title": "SonarQube"
+        },
+        {
+            "title": "n8n"
         }
     ],
     "ord": 4
