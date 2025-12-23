@@ -82,7 +82,13 @@ async function main() {
 
     const { css } = sass.compile(path.resolve(appDir, STYLE_FILE))
     
-    const browser = await puppeteer.launch({headless: true});
+    const browser = await puppeteer.launch({
+        headless: true,
+        args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox'
+        ],
+    });
     const page = await browser.newPage()
     for (const locale of ['en', 'it']) {
         const localeOutputDir = path.resolve(outputDir, locale)
