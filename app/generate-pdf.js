@@ -43,7 +43,7 @@ async function generateData(dataDir) {
         },
         {
             name: 'Curriculum online',
-            url: 'https://lysz210.name',
+            url: 'https://lysz210.me',
             username: 'Curriculum vitae online'
         }
     )
