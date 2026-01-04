@@ -10,6 +10,7 @@
                 "Jenkins",
                 "TravisCI",
                 "Docker",
+                "Terraform",
                 "SonarQube",
                 "n8n"
             ]
